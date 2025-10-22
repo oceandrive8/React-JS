@@ -45,7 +45,7 @@ function Songs({ album, onClose }) {
               </li>
             ))
           ) : (
-            <p>No songs found 😢</p>
+            <p>No songs found:((((</p>
           )}
         </ul>
       </div>
