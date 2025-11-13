@@ -1,0 +1,13 @@
+.login-box {
+  text-align: center;
+  padding: 100px 20px;
+  background-color: #fff0f6;
+  min-height: 100vh;
+  color: #e91e63;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-box p {
+  color: #555;
+  font-size: 1.1rem;
+}
