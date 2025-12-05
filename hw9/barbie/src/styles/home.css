@@ -1,0 +1,42 @@
+.home-box {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #fff0f6;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.home-text {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 15px auto 25px;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.home-img {
+  width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(233,30,99,0.2);
+}
+
+.home-links {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn-home {
+  background-color: #f06292;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.btn-home:hover {
+  background-color: #e91e63;
+}
