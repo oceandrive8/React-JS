@@ -40,7 +40,7 @@ self.addEventListener("fetch", event => {
   const url = new URL(request.url);
 
 
-  if (url.origin === "https://your-public-api.com") {
+  if (url.origin === "https://raw.githubusercontent.com"") {
     event.respondWith(
       caches.open(API_CACHE).then(async cache => {
         try {
