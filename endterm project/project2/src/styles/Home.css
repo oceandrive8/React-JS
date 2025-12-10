@@ -1,0 +1,43 @@
+/* General page styles */
+.home-page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(180deg, #120303, #1c0505, #090000);
+  color: #f4eaea;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Main heading */
+.home-page h1 {
+  font-family: "Oswald", sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fafafa;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Paragraph text */
+.home-page p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 700px;
+  color: #ffd6d6;
+  opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .home-page h1 {
+    font-size: 2.2rem;
+  }
+
+  .home-page p {
+    font-size: 1rem;
+  }
+}

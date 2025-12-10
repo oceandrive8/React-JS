@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import AuthListener from "../src/components/AuthListener";
+import AppRouter from "./routes/AppRouter";
+import useOfflineStatus from "./hooks/useOfflineStatus";
+import "./App.css"; 
 
 function App() {
+  const offline = useOfflineStatus();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {offline && (
+        <div className="offline-toast">
+          ⚠ You are offline
+        </div>
+      )}
+      <AuthListener />
+      <AppRouter />
+    </>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+

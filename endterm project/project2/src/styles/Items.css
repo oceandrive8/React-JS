@@ -1,0 +1,33 @@
+
+.items-page {
+  padding: 80px 40px;
+  background-color: #270707; /* dark background for music app */
+  min-height: calc(100vh - 140px); /* subtract Navbar + Footer height */
+  color: #f1ebeb;
+}
+
+
+.items-page h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+
+.items-page p {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
