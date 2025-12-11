@@ -9,6 +9,7 @@ import keyringIcon from "../assets/keyring.png";
 import searchIcon from "../assets/search.png";
 import profileIcon from "../assets/profile.png";
 import bulbIcon from "../assets/bulb.png";
+import heartIcon from "../assets/heart.PNG";
 
 const Navbar = () => {
   const [query, setQuery] = useState("");
@@ -63,6 +64,14 @@ const Navbar = () => {
           className="nav-icon"
           onClick={() => navigate("/profile")}
         />
+
+        <img
+          src={heartIcon}
+          alt="favorites"
+          className="nav-icon"
+          onClick={() => navigate("/favorites")}
+        />
+
         <img
           src={bulbIcon}
           alt="home"
