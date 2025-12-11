@@ -42,14 +42,14 @@ export default function ItemDetailsPage() {
     const checkLiked = async () => {
       const user = auth.currentUser;
 
-      // 🔹 Guest user: check Redux/localStorage
+      
       if (!user) {
         const localFavs = JSON.parse(localStorage.getItem("favorites") || "[]");
         setLiked(localFavs.some(f => f.id === item.id));
         return;
       }
 
-      // 🔹 Logged-in user: check Firebase
+     
       const userDocRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(userDocRef);
 
@@ -77,7 +77,7 @@ export default function ItemDetailsPage() {
   const toggleLike = async () => {
     const user = auth.currentUser;
 
-    // 🔹 LOCAL MODE (GUEST USER)
+   
     if (!user) {
       if (liked) {
         dispatch(removeFavorite(item.id));
@@ -88,7 +88,7 @@ export default function ItemDetailsPage() {
       return;
     }
 
-    // 🔹 FIREBASE MODE (LOGGED-IN USER)
+  
     const userDocRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(userDocRef);
 
