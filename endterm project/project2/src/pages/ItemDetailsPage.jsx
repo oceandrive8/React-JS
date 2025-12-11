@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addFavorite, removeFavorite } from "../store/favoritesSlice";
+
 import { getItemById } from "../services/itemsService";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -12,6 +15,7 @@ export default function ItemDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const [item, setItem] = useState(location.state?.item || null);
   const [playing, setPlaying] = useState(false);
@@ -37,8 +41,15 @@ export default function ItemDetailsPage() {
 
     const checkLiked = async () => {
       const user = auth.currentUser;
-      if (!user) return;
 
+      // 🔹 Guest user: check Redux/localStorage
+      if (!user) {
+        const localFavs = JSON.parse(localStorage.getItem("favorites") || "[]");
+        setLiked(localFavs.some(f => f.id === item.id));
+        return;
+      }
+
+      // 🔹 Logged-in user: check Firebase
       const userDocRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(userDocRef);
 
@@ -63,59 +74,44 @@ export default function ItemDetailsPage() {
     setPlaying(!playing);
   };
 
- const toggleLike = async () => {
-  const user = auth.currentUser;
+  const toggleLike = async () => {
+    const user = auth.currentUser;
 
-  if (!user) {
-
-    let localFavorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-
-    if (liked) {
-      localFavorites = localFavorites.filter(fav => fav.id !== item.id);
-    } else {
-      if (!localFavorites.some(fav => fav.id === item.id)) {
-        localFavorites.push({
-          id: item.id,
-          title: item.title,
-          artist: item.artist,
-          image: item.image,
-          preview: item.preview
-        });
+    // 🔹 LOCAL MODE (GUEST USER)
+    if (!user) {
+      if (liked) {
+        dispatch(removeFavorite(item.id));
+      } else {
+        dispatch(addFavorite(item));
       }
+      setLiked(!liked);
+      return;
     }
 
-    localStorage.setItem("favorites", JSON.stringify(localFavorites));
-    setLiked(!liked);
-    return; 
-  }
+    // 🔹 FIREBASE MODE (LOGGED-IN USER)
+    const userDocRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(userDocRef);
 
-  
-  const userDocRef = doc(db, "users", user.uid);
-  const docSnap = await getDoc(userDocRef);
+    let favorites = [];
+    if (docSnap.exists()) {
+      favorites = docSnap.data().favorites || [];
+    }
 
-  let favorites = [];
-  if (docSnap.exists()) {
-    favorites = docSnap.data().favorites || [];
-  }
-
-  if (liked) {
-    favorites = favorites.filter(fav => fav.id !== item.id);
-  } else {
-    if (!favorites.some(fav => fav.id === item.id)) {
+    if (liked) {
+      favorites = favorites.filter(fav => fav.id !== item.id);
+    } else {
       favorites.push({
         id: item.id,
         title: item.title,
         artist: item.artist,
         image: item.image,
-        preview: item.preview
+        preview: item.preview,
       });
     }
-  }
 
-  await setDoc(userDocRef, { favorites }, { merge: true });
-  setLiked(!liked);
-};
-
+    await setDoc(userDocRef, { favorites }, { merge: true });
+    setLiked(!liked);
+  };
 
   const goBack = () => navigate("/items");
 
@@ -139,11 +135,9 @@ export default function ItemDetailsPage() {
 
           <div className="player-controls">
             <button className="icon-btn">⏮</button>
-
             <button className="play-btn" onClick={togglePlay}>
               {playing ? "❚❚" : "▶"}
             </button>
-
             <button className="icon-btn">⏭</button>
 
             <button
@@ -167,6 +161,7 @@ export default function ItemDetailsPage() {
           </p>
         </div>
       </div>
+
       <Footer />
     </>
   );
