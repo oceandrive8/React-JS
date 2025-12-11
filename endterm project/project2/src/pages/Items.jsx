@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -12,7 +12,8 @@ export default function Items() {
   const { items, searchQuery, currentPage, totalPages } = useSelector(
     (state) => state.items
   );
-  const pageSize = 10; 
+
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +28,9 @@ export default function Items() {
         console.error(err);
       }
     };
+
     fetchData();
-  }, [searchQuery, currentPage, dispatch]);
+  }, [searchQuery, currentPage, pageSize, dispatch]);
 
   return (
     <>
@@ -41,21 +43,30 @@ export default function Items() {
             items.map((item) => <ItemCard key={item.id} item={item} />)
           )}
         </div>
+
         <div className="pagination">
           <button onClick={() => dispatch(setCurrentPage(Math.max(currentPage - 1, 1)))}>
             Prev
           </button>
+
           <span>
             Page {currentPage} / {totalPages}
           </span>
+
           <button
-            onClick={() => dispatch(setCurrentPage(Math.min(currentPage + 1, totalPages)))}
+            onClick={() =>
+              dispatch(setCurrentPage(Math.min(currentPage + 1, totalPages)))
+            }
           >
             Next
           </button>
+
           <select
             value={pageSize}
-            onChange={() => dispatch(setCurrentPage(1))}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              dispatch(setCurrentPage(1));
+            }}
           >
             {[5, 10, 15, 20].map((n) => (
               <option key={n} value={n}>
