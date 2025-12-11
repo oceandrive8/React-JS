@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ItemCard from "../components/ItemCard";
-
+import "../styles/Favorites.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite, removeFavorite } from "../store/favoritesSlice";
 
