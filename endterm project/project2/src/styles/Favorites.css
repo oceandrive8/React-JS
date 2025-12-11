@@ -1,0 +1,25 @@
+.favorites-page {
+  padding: 80px 40px;
+  background-color: #270707;
+  min-height: calc(100vh - 140px);
+  color: #f1ebeb;
+}
+
+.favorites-page h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.favorites-page p {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
