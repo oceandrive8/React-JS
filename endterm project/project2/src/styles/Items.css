@@ -1,8 +1,8 @@
 
 .items-page {
   padding: 80px 40px;
-  background-color: #270707; /* dark background for music app */
-  min-height: calc(100vh - 140px); /* subtract Navbar + Footer height */
+  background-color: #270707; 
+  min-height: calc(100vh - 140px); 
   color: #f1ebeb;
 }
 
@@ -30,4 +30,53 @@
 body {
   margin: 0;
   padding: 0;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+  color: #f1ebeb;
+  font-size: 18px;
+}
+
+.pagination button {
+  background-color: #3b0f0f; 
+  color: #f1ebeb;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s ease;
+}
+
+.pagination button:hover {
+  background-color: #5a1515;
+}
+
+.pagination span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.pagination select {
+  background-color: #3b0f0f;
+  color: #f1ebeb;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s ease;
+}
+
+.pagination select:hover {
+  background-color: #5a1515;
+}
+
+.pagination option {
+  background-color: #3b0f0f;
+  color: #f1ebeb;
 }
