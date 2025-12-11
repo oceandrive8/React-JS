@@ -16,30 +16,33 @@ export default function AuthListener() {
 
   
   const mergeFavorites = useCallback(async (user) => {
-    const localFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const userDocRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(userDocRef);
-    let serverFavorites = [];
-    if (docSnap.exists()) serverFavorites = docSnap.data().favorites || [];
+  const localFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const userDocRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(userDocRef);
+  let serverFavorites = [];
+  if (docSnap.exists()) serverFavorites = docSnap.data().favorites || [];
 
-   
-    const merged = [...serverFavorites];
-    localFavorites.forEach(fav => {
-      if (!serverFavorites.some(sf => sf.id === fav.id)) merged.push(fav);
-    });
+  const merged = [...serverFavorites];
+  localFavorites.forEach(fav => {
+    if (!serverFavorites.some(sf => sf.id === fav.id)) merged.push(fav);
+  });
 
-   
-    await setDoc(userDocRef, { favorites: merged }, { merge: true });
+  await setDoc(userDocRef, { favorites: merged }, { merge: true });
 
-   
-    dispatch(setFavorites(merged));
+  dispatch(setFavorites(merged));
 
-   
-    if (localFavorites.length > 0) {
-      localStorage.removeItem("favorites");
-      setMergeMessage("Your local favorites were merged with your account.");
-    }
-  }, [db, dispatch]);
+  if (localFavorites.length > 0) {
+    localStorage.removeItem("favorites");
+    setMergeMessage("Your local favorites were merged with your account.");
+  }
+}, [db, dispatch]);
+useEffect(() => {
+  if (mergeMessage) {
+    const timer = setTimeout(() => setMergeMessage(""), 15000);
+    return () => clearTimeout(timer);
+  }
+}, [mergeMessage]);
+
 
   const handleAuthChange = useCallback(async (user) => {
     if (user) {
